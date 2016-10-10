@@ -1,0 +1,15 @@
+{
+  "name": "androidwithreactnative",
+  "version": "1.0.0",
+  "description": "integrate RN with existing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+ ,"start": "node node_modules/react-native/local-cli/cli.js start" },
+  "author": "libery",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-native": "^0.34.1"
+  }
+}
