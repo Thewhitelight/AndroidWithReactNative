@@ -19,17 +19,19 @@ public class ReactViewActivity extends AppCompatActivity implements DefaultHardw
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getIntent().putExtra("data","nihao2");
         setContentView(R.layout.activity_react_view);
         mReactRootView = (ReactRootView) findViewById(R.id.react_view);
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
-                .setJSMainModuleName("react.nativeview")
+                .setJSMainModuleName("index.router")
                 .addPackage(new MainReactPackage())
+                .addPackage(new IntentReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
-        mReactRootView.startReactApplication(mReactInstanceManager, "HelloWorld", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "Libery", null);
     }
 
     @Override
@@ -66,12 +68,10 @@ public class ReactViewActivity extends AppCompatActivity implements DefaultHardw
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onActivityResult(this, requestCode, resultCode, data);
         }
-
     }
 
     @Override
