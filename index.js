@@ -11,7 +11,7 @@ import {
 import Item1 from './src/Item1';
 import Item2 from './src/Item2';
 
-export default class Libery extends React.Component {
+export default class Libery extends Component {
 
     render() {
         var defaultName;

@@ -5,14 +5,14 @@ import {
   StyleSheet,
   Text,
   View,
-
+  BackAndroid
 } from 'react-native';
 import NavigationBar from './Navigation';
 
 class Item1 extends Component {
 
   _leftItemAction(){
-   alert('左侧按钮点击了');
+   BackAndroid.exitApp();
   }
 
   _rightItemAction(){
