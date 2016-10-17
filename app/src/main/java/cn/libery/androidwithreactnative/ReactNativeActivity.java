@@ -6,15 +6,11 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.shell.MainReactPackage;
 
 public class ReactNativeActivity extends AppCompatActivity implements DefaultHardwareBackBtnHandler {
@@ -23,22 +19,10 @@ public class ReactNativeActivity extends AppCompatActivity implements DefaultHar
     private ReactInstanceManager mReactInstanceManager;
     private LifecycleState mLifecycleState = LifecycleState.BEFORE_RESUME;
 
-    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
-        if (reactContext == null) {
-            Log.e(getLocalClassName(), "reactContext==null");
-        } else {
-            reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit(eventName, params);
-        }
-
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getIntent().putExtra("data","nihao");
-
+        getIntent().putExtra("data", "Item1");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
@@ -49,7 +33,7 @@ public class ReactNativeActivity extends AppCompatActivity implements DefaultHar
         mReactInstanceManager = ReactInstanceManager.builder()
                 .setApplication(getApplication())
                 .setBundleAssetName("index.android.bundle")
-                .setJSMainModuleName("index.router")
+                .setJSMainModuleName("index")
                 .addPackage(new MainReactPackage())
                 .addPackage(new IntentReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
