@@ -1,6 +1,6 @@
 # AndroidWithReactNative
 
- Android应用嵌入ReactNative混合开发,用于不同RN模块调用Router.js,Router.js根据Activity传值跳转相应模块
+ Android应用嵌入ReactNative混合开发,用于不同RN模块调用index.js,index.js根据Activity传值跳转相应模块
  
  运行步骤:
  * npm install
