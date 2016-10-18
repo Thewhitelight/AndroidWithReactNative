@@ -5,9 +5,9 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
-import Item1 from './Item1';
+import Item2 from './Item2';
 
-class Item2 extends Component {
+class Item3 extends Component {
     _openPage() {
         this.props.navigator.push({
             nextItem: Item1
@@ -16,14 +16,13 @@ class Item2 extends Component {
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#FFFFFF' }}>
-                <Text>Item2 Page</Text>
-
-                <TouchableOpacity onPress={() => this.props.onPress(Item1)}>
-                    <Text style={{ color: '#55ACEE' }}>点我到上一个</Text>
+                <Text>Item3 Page</Text>
+                <TouchableOpacity onPress={() => this.props.onPress(Item2)}>
+                    <Text style={{ color: '#55ACEE' }}>点击到Item2</Text>
                 </TouchableOpacity>
             </View>
         );
     }
 }
 
-export default Item2;
+export default Item3;

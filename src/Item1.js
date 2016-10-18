@@ -5,9 +5,12 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
   BackAndroid
 } from 'react-native';
 import NavigationBar from './Navigation';
+import Item2 from './Item2';
+import Item3 from './Item3';
 
 class Item1 extends Component {
 
@@ -25,18 +28,21 @@ class Item1 extends Component {
         <NavigationBar
           title='这个是标题'
           titleTextColor="red"
-          leftItemTitle="点我到下一个"
+          leftItemTitle="点我到Item2"
           leftTextColor="#123456"
           rightItemTitle='forward'
           rightTextColor='#3393F2'
-          leftItemFunc={() => this.props.onPress()}
+          leftItemFunc={() => this.props.onPress(Item2)}
           rightItemFunc={this._rightItemAction.bind(this)} />
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
+        <TouchableOpacity onPress={() => this.props.onPress(Item3)}>
+          <Text style={styles.instructions}>
+            To get started, edit index.android.js
         </Text>
+        </TouchableOpacity>
+
         <Text style={styles.instructions}>
           Double tap R on your keyboard to reload,{'\n'}
           Shake or press menu button for dev menu
