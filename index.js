@@ -12,21 +12,25 @@ import Item1 from './src/Item1';
 import Item2 from './src/Item2';
 
 export default class Libery extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      defaultName: '',
+      defaultComponent: null
+    };
+  }
   render() {
-    var defaultName;
     NativeModules.IntentModule.dataToJS((msg) => {
-      if (msg == "Item1") { console.log("1:" + msg); defaultName = msg; }
-      if (msg == "Item2") { console.log("2:" + msg); defaultName = msg; }
-      console.log(defaultName + ":" + (defaultName == "Item1" ? "q" : "w"));
+      if (msg == "Item1") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
+      if (msg == "Item2") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }
+      console.log(this.state.defaultName);
       ToastAndroid.show('JS界面:从Activity中传输过来的数据为:' + msg, ToastAndroid.SHORT);
     }, (result) => {
       ToastAndroid.show('JS界面:错误信息为:' + result, ToastAndroid.SHORT);
     })
-    console.log(defaultName);
     return (
       <Navigator
-        initialRoute={{ name: defaultName, component: ((defaultName == "Item1") ? (Item1) : (Item2)) }}
+        initialRoute={{ name: this.state.defaultName, component: this.state.defaultComponent }}
         configureScene={(route) => {
           return Navigator.SceneConfigs.FadeAndroid;
         } }
