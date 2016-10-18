@@ -1,7 +1,6 @@
 // NavigationBar 导航条的自定义封装
-
 'use strict';
-import React, { Component,PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   Image,
   Text,
@@ -20,7 +19,7 @@ export default class NavigationBar extends Component {
   static defaultProps = {
     title: 'title',
     titleTextColor: '#383838',
-    titleViewFunc () {},
+    titleViewFunc() { },
     barBGColor: '#f8f8f8',
     barOpacity: 1,
     barStyle: 0,
@@ -29,10 +28,10 @@ export default class NavigationBar extends Component {
     statusbarShow: true,
     leftItemTitle: '',
     leftTextColor: '#383838',
-    leftItemFunc () {},
+    leftItemFunc() { },
     rightItemTitle: '',
     rightTextColor: '#383838',
-    rightItemFunc () {},
+    rightItemFunc() { },
     //leftImageSource: require('./nav_back.png'),
   };
   static propTypes = {
@@ -60,7 +59,7 @@ export default class NavigationBar extends Component {
     // 判断左Item的类型
     var onlyLeftIcon = false; // 是否只是图片
     if (this.props.leftItemTitle && this.props.leftImageSource) {
-        onlyLeftIcon = true;
+      onlyLeftIcon = true;
     } else if (this.props.leftImageSource) {
       onlyLeftIcon = true;
     }
@@ -74,7 +73,7 @@ export default class NavigationBar extends Component {
     // 判断是否自定义titleView
     var hasTitleView = false;
     if (this.props.title && this.props.titleView) {
-        hasTitleView = true;
+      hasTitleView = true;
     } else if (this.props.titleView) {
       hasTitleView = true;
     }
@@ -82,7 +81,7 @@ export default class NavigationBar extends Component {
     // 判断右Item的类型
     var onlyRightIcon = false; // 是否只是图片
     if (this.props.rightItemTitle && this.props.rightImageSource) {
-        onlyRightIcon = true;
+      onlyRightIcon = true;
     } else if (this.props.rightImageSource) {
       onlyRightIcon = true;
     }
@@ -102,61 +101,61 @@ export default class NavigationBar extends Component {
     return (
       <View style={styles.nav_barView}>
         <View style={[styles.nav_bar,
-          {
-            backgroundColor: this.props.barBGColor,
-            height: showStatusbar ? NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT : NAV_BAR_HEIGHT,
-            opacity: this.props.barOpacity
-          },
-          showStatusbar ? { paddingTop: STATUS_BAR_HEIGHT } : {}, this.props.barStyle]}>
+        {
+          backgroundColor: this.props.barBGColor,
+          height: showStatusbar ? NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT : NAV_BAR_HEIGHT,
+          opacity: this.props.barOpacity
+        },
+        showStatusbar ? { paddingTop: STATUS_BAR_HEIGHT } : {}, this.props.barStyle]}>
           <View style={styles.nav_ItemView}>
             { // 左侧item
               !noneLeft
-              ? <TouchableOpacity
-                 style={styles.nav_leftItem}
-                 onPress={this.props.leftItemFunc}>
-                 { // 左侧是图片还是文字
-                   onlyLeftIcon
-                   ? <Image style={styles.nav_leftImage}
-                              source={this.props.leftImageSource}/>
-                   : <Text style={[styles.nav_leftTitle,{color: this.props.leftTextColor}]}>
-                       {this.props.leftItemTitle}
-                     </Text>
-                 }
-               </TouchableOpacity>
-              : null
+                ? <TouchableOpacity
+                  style={styles.nav_leftItem}
+                  onPress={this.props.leftItemFunc}>
+                  { // 左侧是图片还是文字
+                    onlyLeftIcon
+                      ? <Image style={styles.nav_leftImage}
+                        source={this.props.leftImageSource} />
+                      : <Text style={[styles.nav_leftTitle, { color: this.props.leftTextColor }]}>
+                        {this.props.leftItemTitle}
+                      </Text>
+                  }
+                </TouchableOpacity>
+                : null
             }
           </View>
           {
             hasTitleView
-            ? <TouchableOpacity style={styles.nav_titleView} onPress={this.props.titleViewFunc}>
+              ? <TouchableOpacity style={styles.nav_titleView} onPress={this.props.titleViewFunc}>
                 {this.props.titleView}
               </TouchableOpacity>
-            : <View style={styles.nav_titleView}>
-                <Text style={[styles.nav_title,{color:this.props.titleTextColor}]}>
-                 {this.props.title}
+              : <View style={styles.nav_titleView}>
+                <Text style={[styles.nav_title, { color: this.props.titleTextColor }]}>
+                  {this.props.title}
                 </Text>
               </View>
           }
           <View style={styles.nav_ItemView}>
             { // 右侧item
               !noneRight
-              ? <TouchableOpacity
-                 style={styles.nav_rightItem}
-                 onPress={this.props.rightItemFunc}>
-                 { // 右侧是图片还是文字
-                   onlyRightIcon
-                   ? <Image style={styles.nav_rightImage}
-                              source={this.props.rightImageSource}/>
-                   : <Text style={[styles.nav_rightTitle,{color: this.props.rightTextColor}]}>
-                      {this.props.rightItemTitle}
-                     </Text>
-                 }
-              </TouchableOpacity>
-              : null
+                ? <TouchableOpacity
+                  style={styles.nav_rightItem}
+                  onPress={this.props.rightItemFunc}>
+                  { // 右侧是图片还是文字
+                    onlyRightIcon
+                      ? <Image style={styles.nav_rightImage}
+                        source={this.props.rightImageSource} />
+                      : <Text style={[styles.nav_rightTitle, { color: this.props.rightTextColor }]}>
+                        {this.props.rightItemTitle}
+                      </Text>
+                  }
+                </TouchableOpacity>
+                : null
             }
           </View>
         </View>
-        <View style={{height:this.props.barBorderBottomWidth,backgroundColor:this.props.barBorderBottomColor}}></View>
+        <View style={{ height: this.props.barBorderBottomWidth, backgroundColor: this.props.barBorderBottomColor }}></View>
       </View>
 
     );

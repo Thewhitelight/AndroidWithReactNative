@@ -11,26 +11,26 @@ import NavigationBar from './Navigation';
 
 class Item1 extends Component {
 
-  _leftItemAction(){
-   BackAndroid.exitApp();
+  _leftItemAction() {
+    BackAndroid.exitApp();
   }
 
-  _rightItemAction(){
+  _rightItemAction() {
     alert('右侧按钮点击了');
   }
 
   render() {
     return (
       <View>
-     <NavigationBar
-           title='这个是标题'
-           titleTextColor="red"
-           leftItemTitle="back"
-           leftTextColor="#123456"
-           rightItemTitle='forward'
-           rightTextColor='#3393F2'
-           leftItemFunc={this._leftItemAction.bind(this)}
-           rightItemFunc={this._rightItemAction.bind(this)}/>
+        <NavigationBar
+          title='这个是标题'
+          titleTextColor="red"
+          leftItemTitle="back"
+          leftTextColor="#123456"
+          rightItemTitle='forward'
+          rightTextColor='#3393F2'
+          leftItemFunc={this._leftItemAction.bind(this)}
+          rightItemFunc={this._rightItemAction.bind(this)} />
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>
