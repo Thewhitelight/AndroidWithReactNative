@@ -1,5 +1,5 @@
 'use strict';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
   View,
@@ -19,7 +19,8 @@ export default class Libery extends Component {
       defaultComponent: null
     };
   }
-  render() {
+
+  componentDidMount() {
     NativeModules.IntentModule.dataToJS((msg) => {
       if (msg == "Item1") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
       if (msg == "Item2") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }
@@ -27,19 +28,26 @@ export default class Libery extends Component {
       ToastAndroid.show('JS界面:从Activity中传输过来的数据为:' + msg, ToastAndroid.SHORT);
     }, (result) => {
       ToastAndroid.show('JS界面:错误信息为:' + result, ToastAndroid.SHORT);
-    })
+    });
+  }
+
+  render() {
+    let Item = this.state.defaultComponent;
+    let nextItem = this.state.defaultComponent == Item1 ? Item2 : Item1;
+
     return (
       <Navigator
-        initialRoute={{ name: this.state.defaultName, component: this.state.defaultComponent }}
         configureScene={(route) => {
           return Navigator.SceneConfigs.FadeAndroid;
         } }
         renderScene={(route, navigator) => {
-          let Component = route.component;
-          if (route.component) {
-            return <Component navigator={navigator} />
+          if (Item) {
+            return <Item navigator={navigator}
+                         onPress={() => this.setState({defaultComponent: nextItem})}/>
+          } else {
+            return <View />;
           }
-        } } />
+        } }/>
     );
   }
 }

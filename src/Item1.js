@@ -25,11 +25,11 @@ class Item1 extends Component {
         <NavigationBar
           title='这个是标题'
           titleTextColor="red"
-          leftItemTitle="back"
+          leftItemTitle="点我到下一个"
           leftTextColor="#123456"
           rightItemTitle='forward'
           rightTextColor='#3393F2'
-          leftItemFunc={this._leftItemAction.bind(this)}
+          leftItemFunc={() => this.props.onPress()}
           rightItemFunc={this._rightItemAction.bind(this)} />
         <Text style={styles.welcome}>
           Welcome to React Native!

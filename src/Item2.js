@@ -19,8 +19,8 @@ class Item2 extends Component {
             <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#FFFFFF' }}>
                 <Text>Splash Page</Text>
 
-                <TouchableOpacity onPress={this._openPage.bind(this)}>
-                    <Text style={{ color: '#55ACEE' }}>Open New Page</Text>
+                <TouchableOpacity onPress={() => this.props.onPress()}>
+                    <Text style={{ color: '#55ACEE' }}>点我到上一个</Text>
                 </TouchableOpacity>
             </View>
         );
