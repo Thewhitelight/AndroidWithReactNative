@@ -19,7 +19,7 @@ export default class Libery extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     NativeModules.IntentModule.dataToJS((msg) => {
       if (msg == "Item1") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
       if (msg == "Item2") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }

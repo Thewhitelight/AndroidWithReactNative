@@ -39,7 +39,7 @@ class Item1 extends Component {
         </Text>
         <TouchableOpacity onPress={() => this.props.onPress(Item3)}>
           <Text style={styles.instructions}>
-            To get started, edit index.android.js
+           点我到Item3
         </Text>
         </TouchableOpacity>
 

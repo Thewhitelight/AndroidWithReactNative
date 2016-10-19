@@ -19,7 +19,7 @@ class Item2 extends Component {
                 <Text>Item2 Page</Text>
 
                 <TouchableOpacity onPress={() => this.props.onPress(Item1)}>
-                    <Text style={{ color: '#55ACEE' }}>点我到上一个</Text>
+                    <Text style={{ color: '#55ACEE' }}>点我到Item1</Text>
                 </TouchableOpacity>
             </View>
         );
