@@ -19,10 +19,11 @@ export default class Libery extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     NativeModules.IntentModule.dataToJS((msg) => {
-      if (msg == "Item1") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
-      if (msg == "Item2") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }
+      console.log("msg" + msg);
+      if (msg == "ReactNativeActivity") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
+      if (msg == "ReactViewActivity") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }
       ToastAndroid.show('JS界面:从Activity中传输过来的数据为:' + msg, ToastAndroid.SHORT);
     }, (result) => {
       ToastAndroid.show('JS界面:错误信息为:' + result, ToastAndroid.SHORT);

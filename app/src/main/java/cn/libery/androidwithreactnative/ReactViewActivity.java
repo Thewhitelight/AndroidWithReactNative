@@ -19,7 +19,7 @@ public class ReactViewActivity extends AppCompatActivity implements DefaultHardw
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getIntent().putExtra("data", "Item2");
+        getIntent().putExtra("data", "ReactViewActivity");
         setContentView(R.layout.activity_react_view);
         mReactRootView = (ReactRootView) findViewById(R.id.react_view);
         mReactInstanceManager = ReactInstanceManager.builder()

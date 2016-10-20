@@ -22,7 +22,7 @@ public class ReactNativeActivity extends AppCompatActivity implements DefaultHar
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getIntent().putExtra("data", "Item1");
+        getIntent().putExtra("data", "ReactNativeActivity");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(this)) {
                 Intent serviceIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);

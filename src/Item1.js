@@ -4,8 +4,10 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   View,
   TouchableOpacity,
+  ListView,
   BackAndroid
 } from 'react-native';
 import NavigationBar from './Navigation';
@@ -13,6 +15,59 @@ import Item2 from './Item2';
 import Item3 from './Item3';
 
 class Item1 extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2, }),
+      title: "Item1",
+      loaded: false
+    };
+  }
+
+  _onRowPress(rowData, rowID) {
+    this.setState({ title: rowData.title });
+  }
+
+  _renderRow(rowData, sectionID, rowID) {
+    return (
+      <TouchableOpacity onPress={() => this._onRowPress(rowData, rowID)}>
+        <View style={styles.row}>
+          <Image
+            style={styles.icon}
+            source={{ uri: rowData.images.large }} />
+          <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+            <Text style={styles.text}>{rowData.title}</Text>
+            <Text style={styles.text}>{rowData.year}</Text>
+            <Text style={styles.text}>{rowData.rating.average}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  componentDidMount() {
+    this._fetchData();
+  }
+
+  _fetchData() {
+    let url = "https://api.douban.com/v2/movie/in_theaters?count=50";
+    fetch(url, {
+      method: 'GET',
+      headers: {},
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    }).then((json) => {
+      if (json.subjects) {
+        console.log(json.subjects[0].title);
+        this.setState({ dataSource: this.state.dataSource.cloneWithRows(json.subjects), title: json.title, loaded: true });
+      }
+    }).catch((error) => {
+      console.error(error);
+    }).done();
+  }
 
   _leftItemAction() {
     BackAndroid.exitApp();
@@ -22,52 +77,63 @@ class Item1 extends Component {
     alert('右侧按钮点击了');
   }
 
-  render() {
+  _renderLoadingView() {
+    return (<View style={styles.container} >
+      <Text>Loading movies......</Text>
+    </View>
+    );
+  }
+
+  _renderView() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <NavigationBar
-          title='这个是标题'
+          title={this.state.title}
           titleTextColor="red"
-          leftItemTitle="点我到Item2"
+          leftItemTitle="BACK"
           leftTextColor="#123456"
           rightItemTitle='forward'
           rightTextColor='#3393F2'
-          leftItemFunc={() => this.props.onPress(Item2)}
-          rightItemFunc={this._rightItemAction.bind(this)} />
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <TouchableOpacity onPress={() => this.props.onPress(Item3)}>
-          <Text style={styles.instructions}>
-           点我到Item3
-        </Text>
-        </TouchableOpacity>
-
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+          leftItemFunc={this._leftItemAction}
+          rightItemFunc={this._rightItemAction} />
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow} />
       </View>
     );
+  }
+
+  render() {
+    if (!this.state.loaded) {
+      return this._renderLoadingView();
+    } else {
+      return this._renderView();
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    flex: 1
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  icon: {
+    width: 100,
+    height: 100,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    padding: 10,
+    backgroundColor: '#F6F6F6',
+  },
+  thumb: {
+    width: 64,
+    height: 64,
+  },
+  text: {
+    flex: 1,
   },
 });
 
