@@ -51,7 +51,7 @@ class Item1 extends Component {
   }
 
   _fetchData() {
-    let url = "https://api.douban.com/v2/movie/in_theaters?count=50";
+    let url = "https://api.douban.com/v2/movie/in_theaters?city=118172&count=50";
     fetch(url, {
       method: 'GET',
       headers: {},
