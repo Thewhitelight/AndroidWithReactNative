@@ -13,6 +13,7 @@ import {
 import NavigationBar from './Navigation';
 import Item2 from './Item2';
 import Item3 from './Item3';
+import Request from './Request';
 
 class Item1 extends Component {
 
@@ -51,26 +52,24 @@ class Item1 extends Component {
   }
 
   _fetchData() {
-    let url = "https://api.douban.com/v2/movie/in_theaters?city=118172&count=50";
-    fetch(url, {
-      method: 'GET',
-      headers: {},
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-    }).then((json) => {
-      if (json.subjects) {
-        console.log(json.subjects[0].title);
-        this.setState({ dataSource: this.state.dataSource.cloneWithRows(json.subjects), title: json.title, loaded: true });
-      }
-    }).catch((error) => {
-      console.error(error);
-    }).done();
+    Request.doubaiList().then(result => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(result.subjects),
+        title: result.title,
+        loaded: true 
+      });
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   _leftItemAction() {
-    BackAndroid.exitApp();
+    this.props.navigator.push({
+      component: Item3,
+      params: {
+        text: '哈哈哈哈哈'
+      }
+    });
   }
 
   _rightItemAction() {
@@ -94,11 +93,11 @@ class Item1 extends Component {
           leftTextColor="#123456"
           rightItemTitle='forward'
           rightTextColor='#3393F2'
-          leftItemFunc={this._leftItemAction}
-          rightItemFunc={this._rightItemAction} />
+          leftItemFunc={() => this._leftItemAction()}
+          rightItemFunc={() => this._rightItemAction()} />
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderRow} />
+          renderRow={this._renderRow.bind(this)} />
       </View>
     );
   }

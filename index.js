@@ -5,7 +5,8 @@ import {
   View,
   Navigator,
   NativeModules,
-  ToastAndroid
+  ToastAndroid,
+  BackAndroid
 } from 'react-native';
 
 import Item1 from './src/Item1';
@@ -19,32 +20,48 @@ export default class Libery extends Component {
     };
   }
 
+   componentWillMount() {
+      BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+  }
+
   componentDidMount() {
     NativeModules.IntentModule.dataToJS((msg) => {
       console.log("msg" + msg);
-      if (msg == "ReactNativeActivity") { console.log("1:" + msg); this.setState({ defaultName: msg, defaultComponent: Item1 }); }
-      if (msg == "ReactViewActivity") { console.log("2:" + msg); this.setState({ defaultName: msg, defaultComponent: Item2 }); }
+      if (msg == "ReactNativeActivity") { console.log("1:" + msg); this.setState({ defaultComponent: Item1 }); }
+      if (msg == "ReactViewActivity") { console.log("2:" + msg); this.setState({ defaultComponent: Item2 }); }
       ToastAndroid.show('JS界面:从Activity中传输过来的数据为:' + msg, ToastAndroid.SHORT);
     }, (result) => {
       ToastAndroid.show('JS界面:错误信息为:' + result, ToastAndroid.SHORT);
     });
   }
+  
+  componentWillUnmount() {
+      BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+  }
+
+  onBackAndroid = () => {
+    const nav = this.navigator;
+    const routers = nav.getCurrentRoutes();
+    if (routers.length > 1) {
+      nav.pop();
+      return true;
+    }
+    return false;
+  };
 
   render() {
-    let Item = this.state.defaultComponent;
+    if (!this.state.defaultComponent) return <View />;
 
     return (
       <Navigator
+        initialRoute={{ component: this.state.defaultComponent }}
         configureScene={(route) => {
-          return Navigator.SceneConfigs.FadeAndroid;
+          return Navigator.SceneConfigs.PushFromRight;
         } }
         renderScene={(route, navigator) => {
-          if (Item) {
-            return <Item navigator={navigator}
-              onPress={(nextItem) => this.setState({ defaultComponent: nextItem })} />
-          } else {
-            return <View />;
-          }
+          this.navigator = navigator;
+          let Component = route.component;
+          return <Component {...route.params} navigator={navigator} />
         } } />
     );
   }

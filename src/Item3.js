@@ -12,8 +12,8 @@ class Item3 extends Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#FFFFFF' }}>
                 <Text>Item3 Page</Text>
-                <TouchableOpacity onPress={() => this.props.onPress(Item2)}>
-                    <Text style={{ color: '#55ACEE' }}>点击到Item2</Text>
+                <TouchableOpacity onPress={() => this.props.navigator.pop()}>
+                    <Text style={{ color: '#55ACEE' }}>{this.props.text}</Text>
                 </TouchableOpacity>
             </View>
         );
