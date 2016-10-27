@@ -95,7 +95,7 @@ export default class Item2 extends Component {
                     rightTextColor='#3393F2'
                     leftItemFunc={() => this._leftItemAction()}
                     rightItemFunc={this._rightItemAction.bind(this)}/>
-                <TouchableOpacity onPress={() => this.props.onPress(Item3)}>
+                <TouchableOpacity onPress={() => this._leftItemAction()}>
                     <Text style={styles.instructions}>
                         点我到Item3
                     </Text>
