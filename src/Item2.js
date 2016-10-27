@@ -1,31 +1,22 @@
 'use strict';
-import React, { Component } from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    Image,
-    View,
-    TouchableOpacity,
-    ListView,
-    BackAndroid
-} from 'react-native';
-import NavigationBar from './Navigation';
-import Item3 from './Item3';
+import React, {Component} from "react";
+import {AppRegistry, StyleSheet, Text, Image, View, TouchableOpacity, ListView, BackAndroid} from "react-native";
+import NavigationBar from "./navigation/Navigation";
+import Item3 from "./Item3";
 
-class Item2 extends Component {
+export default class Item2 extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2, }),
+            dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
             title: "Item1",
             loaded: false
         };
     }
 
     _onRowPress(rowData, rowID) {
-        this.setState({ title: rowData.title });
+        this.setState({title: rowData.title});
     }
 
     _renderRow(rowData, sectionID, rowID) {
@@ -34,8 +25,8 @@ class Item2 extends Component {
                 <View style={styles.row}>
                     <Image
                         style={styles.icon}
-                        source={{ uri: rowData.images.large }} />
-                    <View style={{ flexDirection: 'column', marginLeft: 10 }}>
+                        source={{uri: rowData.images.large}}/>
+                    <View style={{flexDirection: 'column', marginLeft: 10}}>
                         <Text style={styles.text}>{rowData.title}</Text>
                         <Text style={styles.text}>{rowData.year}</Text>
                         <Text style={styles.text}>{rowData.rating.average}</Text>
@@ -61,7 +52,11 @@ class Item2 extends Component {
         }).then((json) => {
             if (json.subjects) {
                 console.log(json.subjects[0].title);
-                this.setState({ dataSource: this.state.dataSource.cloneWithRows(json.subjects), title: json.title, loaded: true });
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(json.subjects),
+                    title: json.title,
+                    loaded: true
+                });
             }
         }).catch((error) => {
             console.error(error);
@@ -69,7 +64,12 @@ class Item2 extends Component {
     }
 
     _leftItemAction() {
-        BackAndroid.exitApp();
+        this.props.navigator.push({
+            component: Item3,
+            params: {
+                text: '呵呵呵呵呵'
+            }
+        });
     }
 
     _rightItemAction() {
@@ -77,15 +77,15 @@ class Item2 extends Component {
     }
 
     _renderLoadingView() {
-        return (<View style={styles.container} >
-            <Text>Loading movies......</Text>
-        </View>
+        return (<View style={styles.container}>
+                <Text>Loading movies......</Text>
+            </View>
         );
     }
 
     _renderView() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
                 <NavigationBar
                     title={this.state.title}
                     titleTextColor="red"
@@ -93,8 +93,8 @@ class Item2 extends Component {
                     leftTextColor="#123456"
                     rightItemTitle='forward'
                     rightTextColor='#3393F2'
-                    leftItemFunc={() => this.props.onPress(Item3)}
-                    rightItemFunc={this._rightItemAction.bind(this)} />
+                    leftItemFunc={() => this._leftItemAction()}
+                    rightItemFunc={this._rightItemAction.bind(this)}/>
                 <TouchableOpacity onPress={() => this.props.onPress(Item3)}>
                     <Text style={styles.instructions}>
                         点我到Item3
@@ -102,7 +102,7 @@ class Item2 extends Component {
                 </TouchableOpacity>
                 <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={this._renderRow.bind(this)} />
+                    renderRow={this._renderRow.bind(this)}/>
             </View>
         );
     }
@@ -145,5 +145,3 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
-
-export default Item2;

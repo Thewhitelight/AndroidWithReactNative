@@ -1,10 +1,12 @@
 'use strict';
-import React, { Component } from 'react';
+import React, {Component} from "react";
 
 const HOST = 'https://api.douban.com/v2/';
 
 export default class Request {
-    static doubaiList() {return Request._request('movie/in_theaters?city=118172&count=50'); }
+    static doubaiList() {
+        return Request._request('movie/in_theaters?city=118172&count=50');
+    }
 }
 
 Request._request = (url) => {
@@ -23,4 +25,4 @@ Request._request = (url) => {
             reject(error);
         }).done();
     });
-}
+};
